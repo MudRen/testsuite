@@ -275,6 +275,31 @@ void do_tests() {
   ASSERT_EQ(30333, tmp[10]);
   ASSERT_EQ(601, tmp[11]);
 
+  // FOREACH
+  {
+    int count = 0;
+
+    tmp = "欲穷千里目🍆🍠🧮😊👌💩更上一层楼";
+    foreach(int x in tmp) {
+      count ++;
+    }
+
+    ASSERT_EQ(strlen(tmp), count);
+  }
+
+  // FOREACH REF
+  {
+    int count = 0;
+
+    tmp = "欲穷千里目🍆🍠🧮😊👌💩更上一层楼";
+    foreach(int ref x in tmp) {
+      x++;
+      count ++;
+    }
+
+    ASSERT_EQ(strlen(tmp), count);
+  }
+
   // range operator, based on codepoint
   ASSERT_EQ("入", "黄河入海流"[2..2]);
   ASSERT_EQ("", "黄河入海流"[5..3]);
@@ -344,7 +369,7 @@ void do_tests() {
 
   tmp = "欲a穷aa千aaa里aaaa目";
   ASSERT_EQ("欲\na\n穷\naa\n千\naa\na\n里\naa\naa\n目", sprintf("%-=2s", tmp));
-  ASSERT_EQ("欲a穷\naa千a\naa里a\naaa目", sprintf("%-=5s", tmp));
+  ASSERT_EQ("欲a穷\naa千\naaa里\naaaa\n目", sprintf("%-=5s", tmp));
 
   // column mode with breakpoints
   tmp = "欲 穷 千 里 目";
@@ -359,7 +384,7 @@ void do_tests() {
   ASSERT_EQ("欲穷\n千里\n  目", sprintf("%1.4=s", tmp));
 
   // https://github.com/fluffos/fluffos/issues/590
-  ASSERT_EQ("测试看\n啊看\nis\nabc s\nsenten\nce\n好不好", sprintf("%=-6s", "测试看 啊看 is abc s sentence 好不好"));
+  ASSERT_EQ("测试看\n啊看\nis abc\ns\nsenten\nce 好\n不好", sprintf("%=-6s", "测试看 啊看 is abc s sentence 好不好"));
 
   // table mode
   tmp = "一\n二\n三\n四\n五\n六\n七\n八\n九\n十\n甲\n乙\n丙\n丁\n戊";
